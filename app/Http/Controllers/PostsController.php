@@ -9,6 +9,6 @@ class PostsController extends Controller
 {
     public function index(){
         $posts = Posts::all();
-        return response()->json($posts);
+        return response()->json(['data' => $posts]);
     }
 }
