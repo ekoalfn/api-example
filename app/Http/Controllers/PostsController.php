@@ -12,7 +12,7 @@ class PostsController extends Controller
     public function index(){
         $posts = Posts::all();
 
-        return PostsResoure::collection($posts);
+        return PostsResource::collection($posts);
     }
 
     public function show($id){
