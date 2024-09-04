@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class Posts extends Model
@@ -12,4 +13,9 @@ class Posts extends Model
     protected $fillable = [
         'title', 'news_content', 'author'
     ];
+
+    public function Writer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'author', 'id');
+    }
 }
