@@ -7,9 +7,10 @@ use App\Http\Controllers\AuthenticationController;
 
 Route::post('/login', [AuthenticationController::class, 'login']);
 
+Route::get('/posts', [PostsController::class, 'index']);
+Route::get('/posts/{id}', [PostsController::class, 'show']);
+
 Route::middleware(['auth:sanctum'])->group(function() {
-    Route::get('/posts', [PostsController::class, 'index']);
-    Route::get('/posts/{id}', [PostsController::class, 'show']);
     Route::post('/posts', [PostsController::class, 'store']);
     
     Route::get('/logout', [AuthenticationController::class, 'logout']);
