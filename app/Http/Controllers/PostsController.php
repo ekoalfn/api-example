@@ -45,4 +45,11 @@ class PostsController extends Controller
 
         return response()->json($post);
     }
+
+    public function destroy($id){
+        $post = Posts::findOrFail($id);
+        $post->delete();
+
+        return response()->json($post); 
+    }
 }
