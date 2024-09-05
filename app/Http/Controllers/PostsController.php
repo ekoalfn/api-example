@@ -35,9 +35,14 @@ class PostsController extends Controller
     }
 
     public function update(Request $request,$id){
-        // $validated = $request->validate([
-        //     'title' => 'required',
-        //     'news_content' => 'required'
-        // ]);
+        $validated = $request->validate([
+            'title' => 'required',
+            'news_content' => 'required'
+        ]);
+
+        $post = Posts::findOrFail($id);
+        $post->update($request->all());
+
+        return response()->json($post);
     }
 }
