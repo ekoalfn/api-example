@@ -13,7 +13,7 @@ class PostsController extends Controller
     public function index(){
         $posts = Posts::all();
 
-        return PostsResource::collection($posts);
+        return PostDetailResource::collection($posts->loadMissing(['writer:id,username', 'comment:id,post_id,comments_content,user_id']));
     }
 
     public function show($id){
