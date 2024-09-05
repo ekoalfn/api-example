@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Posts;
-use App\Http\Resources\PostsResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\PostsResource;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\PostDetailResource;
 
 class PostsController extends Controller
@@ -27,6 +28,15 @@ class PostsController extends Controller
             'title' => 'required',
             'news_content' => 'required'
         ]);
+
+        if($request->file){
+            $filename = $this->generateRandomString();
+            $extension = $request->file->extension();
+            $image = $filename.'.'.$extension;
+
+            Storage::putFileAs('image', $request->file, $image);
+            $request['image'] = $image;
+        }
 
         $request['author'] = Auth::user()->id;
 
@@ -51,5 +61,17 @@ class PostsController extends Controller
         $post->delete();
 
         return response()->json($post); 
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+    
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+    
+        return $randomString;
     }
 }
