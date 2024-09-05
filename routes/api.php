@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::delete('/posts/{id}', [PostsController::class, 'destroy'])->middleware('author-post');
 
     Route::post('/comments', [CommentsController::class, 'store']);
+    Route::patch('/comments/{id}', [CommentsController::class, 'update'])->middleware('commentator');
     Route::get('/logout', [AuthenticationController::class, 'logout']);
 });
 
