@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\CommentResource;
 
 class CommentsController extends Controller
 {
@@ -17,6 +18,6 @@ class CommentsController extends Controller
         $request['user_id'] = Auth::user()->id;
         $comment = Comment::create($request->all());
 
-        return response()->json($comment);
+        return new CommentResource($comment->loadMissing(['commentator:id,username']));
     }
 }
