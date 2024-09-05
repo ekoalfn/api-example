@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Posts;
 use App\Http\Resources\PostsResource;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PostDetailResource;
 
 class PostsController extends Controller
@@ -18,6 +19,18 @@ class PostsController extends Controller
     public function show($id){
         $posts = Posts::with('Writer:id,username')->findorFail($id);
 
+        return new PostDetailResource($posts);
+    }
+
+    public function store(Request $request){
+        $validated = $request->validate([
+            'title' => 'required',
+            'news_content' => 'required'
+        ]);
+
+        $request['author'] = Auth::user()->id;
+
+        $posts = Posts::create($request->all());
         return new PostDetailResource($posts);
     }
 }
