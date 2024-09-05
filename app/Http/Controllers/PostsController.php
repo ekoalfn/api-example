@@ -33,4 +33,11 @@ class PostsController extends Controller
         $posts = Posts::create($request->all());
         return new PostDetailResource($posts);
     }
+
+    public function update(Request $request,$id){
+        // $validated = $request->validate([
+        //     'title' => 'required',
+        //     'news_content' => 'required'
+        // ]);
+    }
 }

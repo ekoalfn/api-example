@@ -12,7 +12,8 @@ Route::get('/posts/{id}', [PostsController::class, 'show']);
 
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::post('/posts', [PostsController::class, 'store']);
-    
+    Route::patch('/posts/{id}', [PostsController::class, 'update'])->middleware('author-post');
+
     Route::get('/logout', [AuthenticationController::class, 'logout']);
 });
 
