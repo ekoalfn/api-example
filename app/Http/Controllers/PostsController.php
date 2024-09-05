@@ -17,9 +17,9 @@ class PostsController extends Controller
     }
 
     public function show($id){
-        $posts = Posts::with('Writer:id,username')->findorFail($id);
+        $posts = Posts::with(['Writer:id,username', 'Comment'])->findorFail($id);
 
-        return new PostDetailResource($posts);
+        return new PostDetailResource($posts->loadMissing(['writer:id,username', 'comment:id,post_id,comments_content,user_id']));
     }
 
     public function store(Request $request){
